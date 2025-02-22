@@ -4,9 +4,8 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const uri = process.env.MONGODB_URL
-// const uri = process.env.MONGODB_URL || 'mongodb://localhost:27017/survey-app'
-console.log(uri,'uri');
+
+const uri = process.env.MONGODB_URL || 'mongodb://localhost:27017/survey-app'
 
 const connectDB = async ()=>{
     try {

@@ -4,8 +4,8 @@ import cors from 'cors'
 import errorHandler from './middleware/error.middleare'
 import dotenv from 'dotenv'
 dotenv.config()
-const app = express()
 
+const app = express()
 
 
 import adminRoute from './routes/admin.route'

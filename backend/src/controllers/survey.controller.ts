@@ -2,11 +2,11 @@
 import { Request, Response, NextFunction } from "express"
 import surveyService from "../services/survey.service"
 
+
+
+
 const createSurvey = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log(req.body,'req.body');
-
-        
         const response = await surveyService.createSurvey(req.body)
         return res.status(200).json({message:'Survey submission form successfully created',response})
     } catch (error) {

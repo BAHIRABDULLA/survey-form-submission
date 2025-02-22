@@ -11,13 +11,11 @@ const login = async (data:Partial<IAdmin>)=>{
             throw new CustomError("Admin not existed ",402)
         }
         const isMatch = await bcrypt.compare(data.password, checkAdmin.password)
-        console.log(isMatch,'is match djsfjdskfdkj');
         
         if(!isMatch){
             throw new CustomError('Invalid credentials',401)
         }
-
-        console.log(checkAdmin,'check admin');
+        
         return 
     } catch (error) {
         throw error
