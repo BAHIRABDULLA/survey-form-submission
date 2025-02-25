@@ -5,6 +5,6 @@ const router = express.Router()
 
 
 router.post('/',surveyController.createSurvey)
-// router.get('/',surveyController.getAllSurveysByEmail)
+router.get('/survey-submissions',surveyController.fetchAllSurveys)
 
 export default router

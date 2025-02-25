@@ -1,23 +1,15 @@
 import {
-    Button,
-    TextField,
-    Card,
-    CardContent,
-    Typography,
-    FormControl,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput
+    Button, TextField, Card, CardContent, Typography,
+    FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput
 } from "@mui/material";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { handleLogin } from "../api/adminApi";
 import { toast, Toaster } from 'react-hot-toast';
-import Visibility from '@mui/icons-material/Visibility';
+import { Visibility } from '@mui/icons-material';
 import { VisibilityOff } from '@mui/icons-material';
 
 const loginSchema = z.object({
@@ -32,13 +24,13 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginSchemaType>({
         resolver: zodResolver(loginSchema)
     });
-    
-    useEffect(() => {
-        console.log(errors, 'err');
-    }, [errors]);
-    
+    const token = localStorage.getItem('token');
+
+    if (token) return <Navigate to="/admin/dashboard" replace />;
+
+
     const [showPassword, setShowPassword] = useState(false);
-    
+
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -46,15 +38,18 @@ const Login = () => {
     const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
-    
+
     const loginHandler = async (data: LoginSchemaType) => {
         const response = await handleLogin(data);
-        
+
         if (response && response?.status >= 400) {
             toast.error(response?.data.message || 'An error occurred');
             return;
         }
-        
+        if (response?.data.token) {
+            localStorage.setItem('token', response.data.token)
+        }
+
         navigate('/admin/dashboard');
     };
 
