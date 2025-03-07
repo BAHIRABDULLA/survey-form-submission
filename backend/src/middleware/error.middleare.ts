@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import CustomError from '../utils/custom.error';
+import { messageConstants } from '../constants/messages';
+
+
+
 
 const errorHandler = (err:any , req:Request,res:Response,next:NextFunction)=>{
     if(err instanceof CustomError) {
@@ -8,7 +12,7 @@ const errorHandler = (err:any , req:Request,res:Response,next:NextFunction)=>{
         })
     }    
     res.status(500).json({
-        message: err.message || 'Internal server error',
+        message: err.message || messageConstants.INTERNAL_SERVER_ERROR,
     })
 }
 

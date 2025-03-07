@@ -1,8 +1,8 @@
 
 
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
-export interface IAdmin {
+export interface IAdmin extends Document {
     email: string,
     password: string
 }
@@ -18,4 +18,4 @@ const adminSchema = new mongoose.Schema({
     }
 })
 
-export const Admin = mongoose.model('Admin', adminSchema)
+export const Admin = mongoose.model<IAdmin>('Admin', adminSchema)

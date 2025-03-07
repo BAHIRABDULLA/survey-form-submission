@@ -1,46 +1,37 @@
 
 import { Request, Response, NextFunction } from "express"
-import surveyService from "../services/survey.service"
-import adminService from "../services/admin.service"
+import { messageConstants } from "../constants/messages"
+import { HttpStatus } from "../constants/enums"
+import { IAdminService } from "../services/interface/IAdmin.service"
+import { ISurveyService } from "../services/interface/ISurvey.service"
 
 
+export class SurveyController {
+    
+    constructor(private surveyService:ISurveyService ,private adminService:IAdminService ) { }
 
 
-const createSurvey = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const response = await surveyService.createSurvey(req.body)
-        return res.status(200).json({message:'Survey submission form successfully created',response})
-    } catch (error) {
-        next(error)
+    async createSurvey(req: Request, res: Response, next: NextFunction) {
+        try {
+            const response = await this.surveyService.createSurvey(req.body)
+            return res.status(HttpStatus.CREATED).json({message:messageConstants.SURVEY_FORM_CREATED,response})
+        } catch (error) {
+            next(error)
+        }
     }
-}
 
-// const getAllSurveysByEmail = async (req:Request,res:Response,next:NextFunction) =>{
-//     try {
-//         const response = await surveyService.getAllSurveysByEmail()
-//         return res.status(200).json({message:'Survey submissions fetched',response})
-//     } catch (error) {
-//         next(error)
-//     }
-// }
-
-
-const fetchAllSurveys = async (req:Request,res:Response,next:NextFunction) => {
+    async fetchAllSurveys(req:Request,res:Response,next:NextFunction) {
         try {
             const { search='', currentPage=1, itemsPerPage=5 } = req.query;
-    
-            
             const params ={
                 search:search as string,
                 page: currentPage as number,
                 limit: itemsPerPage as number
             }
-            const response = await adminService.getSurveySubmission(params)
-            return res.status(200).json({message:'data fetched ', filteredResponse:response})
+            const response = await this.adminService.getSurveySubmission(params)
+            return res.status(HttpStatus.OK).json({message:messageConstants.SURVEY_FORM_FETCHED, filteredResponse:response})
         } catch (error) {
             next(error)
         }
+    }
 }
-
-
-export default {createSurvey ,fetchAllSurveys}
