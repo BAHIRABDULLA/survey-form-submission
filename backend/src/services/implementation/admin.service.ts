@@ -42,7 +42,6 @@ export class AdminService implements IAdminService {
     async getSurveySubmission(params: IParams) {
         try {
             const { search, page, limit } = params
-
             const skip = (page - 1) * limit
             const query = search ? {
                 $or: [

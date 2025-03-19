@@ -9,12 +9,12 @@ import { SurveyValidator } from "../services/implementation/validation.service";
 
 
 const surveyRepository = new SurveyRepository();
-const surveyValidator = new SurveyValidator();
-const surveyService = new SurveyService(surveyRepository, surveyValidator);
-
-
 const adminRepository = new AdminRepository();
+const surveyValidator = new SurveyValidator();
+
+const surveyService = new SurveyService(surveyRepository, surveyValidator);
 const adminService = new AdminService(adminRepository, surveyRepository);
+
 
 const surveyController = new SurveyController(surveyService, adminService);
 const adminController = new AdminController(adminService);

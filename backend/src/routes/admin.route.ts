@@ -6,7 +6,7 @@ const route = express.Router()
 
 
 route.post('/login', adminController.login)
-route.get('/survey-submissions', authMiddleware, adminController.getSurveySubmission)
+route.get('/survey-submissions', authMiddleware, adminController.getSurveySubmission.bind(adminController))
 
 
 export default route
