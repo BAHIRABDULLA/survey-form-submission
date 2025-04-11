@@ -11,7 +11,7 @@ export class AdminController {
 
     constructor(private adminService: IAdminService) { }
 
-    async login(req: Request, res: Response, next: NextFunction) {
+     login =async(req: Request, res: Response, next: NextFunction) =>{
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
